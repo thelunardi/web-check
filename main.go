@@ -2,25 +2,28 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 )
 
 func main() {
 	start()
-	showMenu()
-	command := getOption()
+	for {
+		showMenu()
+		command := getOption()
 
-	switch command {
-	case 1:
-		fmt.Println("Monitorando...")
-	case 2:
-		fmt.Println("Exibindo logs...")
-	case 0:
-		fmt.Println("Saindo...")
-		os.Exit(0)
-	default:
-		fmt.Println("Comando inexistente")
-		os.Exit(-1)
+		switch command {
+		case 1:
+			startMonitoring()
+		case 2:
+			fmt.Println("Exibindo logs...")
+		case 0:
+			fmt.Println("Saindo...")
+			os.Exit(0)
+		default:
+			fmt.Println("Comando inexistente")
+			os.Exit(-1)
+		}
 	}
 }
 
@@ -44,4 +47,17 @@ func getOption() int {
 	fmt.Println("O comando escolhido foi", command)
 
 	return command
+}
+
+func startMonitoring() {
+	fmt.Println("Monitorando...")
+
+	site := "https://www.alura.com.br"
+	resp, _ := http.Get(site)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("Site:", site, "foi carregado com sucesso")
+	} else {
+		fmt.Println("Site:", site, "está com problema. Status code: ", resp.StatusCode)
+	}
 }
