@@ -21,7 +21,7 @@ func main() {
 			fmt.Println("Saindo...")
 			os.Exit(0)
 		default:
-			fmt.Println("Comando inexistente")
+			fmt.Println("Comando inexistente!")
 			os.Exit(-1)
 		}
 	}
